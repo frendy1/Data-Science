@@ -1,0 +1,102 @@
+
+#######Frendy Excellent##################################
+#Data Science Fundamentals###############################
+#Unit 1 Lesson3##########################################
+
+########Drills###########################################
+
+#Traffic light
+
+    if  current.lower() == "green":
+        return "yellow"
+    elif current.lower() == "yellow":
+        return "red"
+    elif current.lower() == "red":
+        return "green"
+    else:
+        return "Invalid color"
+
+#Umbrella decider
+
+def take_umbrella(weather, rain_chance):
+    # Your code here.
+    take_umbrella = ((weather == "rainy") or ((weather == "cloudy") and rain_chance > .2)) or (weather == "sunny" and rain_chance > 0.5)
+    return take_umbrella
+
+#Graceful addition
+
+def my_add(a, b):
+    # Your code here.
+    try:
+        return a + b
+    except TypeError:
+        return None
+
+#Red and bumpy
+
+def color_probability(color, texture):
+    # Your code goes here.
+    smooth_red_marble = 1
+    smooth_yellow_marble = 1
+    smooth_green_marble = 1
+
+    bumpy_red_marble = 4
+    bumpy_yellow_marble = 2
+    bumpy_green_marble = 1
+    
+    if texture == "smooth":
+      if color.lower() == "red":
+        color_prob =  smooth_red_marble/(smooth_red_marble + smooth_yellow_marble + smooth_green_marble)
+      if color.lower() == "yellow":
+        color_prob =  smooth_yellow_marble/(smooth_red_marble + smooth_yellow_marble + smooth_green_marble)
+      if color.lower() == "green":
+        color_prob =  smooth_green_marble/(smooth_red_marble + smooth_yellow_marble + smooth_green_marble)
+      result = str(color_prob)
+
+    elif texture == "bumpy":
+      if color.lower() == "red":
+        color_prob =  bumpy_red_marble/(bumpy_red_marble + bumpy_yellow_marble + bumpy_green_marble)
+      if color.lower() == "yellow":
+        color_prob =  bumpy_yellow_marble/(bumpy_red_marble + bumpy_yellow_marble + bumpy_green_marble)
+      if color.lower() == "green":
+        color_prob =  bumpy_green_marble/(bumpy_red_marble + bumpy_yellow_marble + bumpy_green_marble)
+      result = str(color_prob)
+
+    color_probs = result.split(".")
+    final_result = color_probs[0] + "." + color_probs[1][0:2] 
+    return final_result
+
+#Hacking p-hackers
+
+def categorize_study(p_value, requirements):
+    # Your code here.
+    if requirements == 6:
+      b_factor = 1
+    elif requirements == 5:
+      b_factor = 2
+    elif requirements == 4:
+      b_factor = 4
+    elif requirements == 3:
+      b_factor = 8
+    elif requirements == 2:
+      b_factor = 16
+    elif requirements == 1:
+      b_factor = 32
+    elif requirements == 0:
+      b_factor = 64
+
+    product_category_level = p_value * b_factor
+    
+    if product_category_level < 0.05:
+      if requirements == 0:
+        product_category = 'Needs review'
+      else:
+        product_category = 'Fine'
+    elif product_category_level >= 0.05 and product_category_level < 0.15:
+      product_category = 'Needs review'  
+    elif product_category_level > 0.15:
+      product_category = 'Pants on fire'
+
+    return product_category
+
+
