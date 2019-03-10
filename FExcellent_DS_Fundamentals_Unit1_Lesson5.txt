@@ -1,0 +1,62 @@
+
+#######Frendy Excellent##################################
+#Data Science Fundamentals###############################
+#Unit 1 Lesson5##########################################
+
+########Drills###########################################
+
+#Order filler############################################
+
+def fillable(stock, merch, n):
+    # Your code goes here.
+    if merch in stock:
+      if n <= stock[merch]: 
+        result = True
+      else:
+        result = False
+    else:
+      result = False
+    return result
+
+
+#User contacts###########################################
+
+def user_contacts(data):
+    # Your code here.
+    contact_dict = {}
+    for info in data:
+      if len(info) > 1:
+        contact_dict[info[0]] = info[1]
+      else:
+        contact_dict[info[0]] = None
+    return contact_dict
+
+#Multiple modes###########################################
+
+def modes(data):
+    # Your code here.
+    result = []
+    mode_dict = {}
+    
+    if "list" in str(type(data)) and len(data) == 1 and "str" in str(type(data[0])):
+      data = data[0]
+    
+    data_set = set(data) 
+    lookup_values_list_sorted = sorted(list(data_set))
+    
+    for lookup_value in lookup_values_list_sorted:
+      count = data.count(lookup_value)
+      mode_dict[lookup_value] = count
+    
+    unique_counts_set = set(mode_dict.values())
+    unique_counts_list_sorted = sorted(list(unique_counts_set))
+    greatest_count = unique_counts_list_sorted[-1]
+    
+    if unique_counts_list_sorted[0] == greatest_count:
+      result = []
+    else:
+      for lookup_value in lookup_values_list_sorted:
+        if mode_dict[lookup_value] == greatest_count:
+          result.append(lookup_value)
+    
+    return result
