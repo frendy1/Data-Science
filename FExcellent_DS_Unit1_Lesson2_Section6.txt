@@ -1,0 +1,44 @@
+Question 1
+
+-- What's the most expensive listing? What else can you tell me about the listing?
+
+Answer
+
+SELECT * FROM sfo_listings
+where price in (select max(price) from sfo_listings)
+
+-- At $10,000 per night, Sarah has the most expensive listing (available for up to 18 days): an Entire home/apt (Full House Victorian: 7500 SqFt, 4 Floors, Hot Tub) 
+-- in Western Addition nieghborhood (lat 37.780230017385364, lon -122.44046111352687)
+-- can be rented for 2 night, minimum.
+-- 3 reviews (1 review per month), latest review date is 2018-05-24.
+-- Host has four current listings
+
+
+Question 2
+
+-- What neighborhoods seem to be the most popular?
+
+Answer
+
+SELECT neighbourhood, reviews_per_month FROM sfo_listings
+GROUP BY reviews_per_month, neighbourhood
+HAVING reviews_per_month in (SELECT MAX(reviews_per_month) FROM sfo_listings)
+ORDER BY neighbourhood
+
+Question 3
+
+-- What time of year is the cheapest time to go to San Francisco? What about the busiest?
+
+--Answer, Cheapest: All months, except July and August
+
+SELECT DISTINCT date_part('month', calender_date) AS cheapest_months FROM sfo_calendar
+WHERE price IN (SELECT MIN(price) FROM sfo_calendar)
+ORDER BY cheapest_months
+
+--Answer, Busiest Month is November, followed by January, then December
+
+SELECT DISTINCT date_part('month', calender_date) AS busiest_months, available, COUNT(available) busy_ind FROM sfo_calendar
+GROUP BY busiest_months, available 
+HAVING available = 't'
+ORDER BY busy_ind DESC
+
