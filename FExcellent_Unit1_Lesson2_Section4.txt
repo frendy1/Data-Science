@@ -1,76 +1,0 @@
-/* What was the hottest day in our data set? Where was that? */
-
-SELECT  
-	zip, 
-	MAX(maxtemperaturef)
-FROM 
-	weather
-GROUP BY  
-	zip 
-ORDER BY 
-	MAX(maxtemperaturef) DESC
-LIMIT 1;
-
-
-
-/* How many trips started at each station? */
-
-SELECT 
-	start_station,  
-	COUNT(*) as trip_count 
-FROM 
-	trips 
-GROUP BY 
-	start_station 
-ORDER BY 
-	trip_count DESC;
-
-
-
-/* What's the shortest trip that happened? */
-
-SELECT 
-	MIN(duration) as shortest_trip_duration
-FROM 
-	trips;
-
-/* or min duration with more detail */
-
-WITH 
-	min_duration_CTE AS 
-(SELECT  
-	start_station, 
-	subscriber_type, 
-	MIN(duration), 
-	dense_rank() OVER trips_rank
-FROM 
-	trips 
-GROUP BY 
-	subscriber_type, 
-	start_station 
-WINDOW trips_rank AS 
-	(
-	PARTITION BY subscriber_type ORDER BY MIN(duration)
-	)
-) 
-SELECT 
-	* 
-FROM
-	min_duration_CTE
-WHERE
-	dense_rank = 1;
-
-
-
-
-/* What is the average trip duration, by end station? */
-
-SELECT 
-	end_station,
-	TRUNC(AVG(duration), 2) as duration_avg
-FROM 
-	trips
-GROUP BY
-	end_station
-ORDER BY
-	duration_avg DESC;
